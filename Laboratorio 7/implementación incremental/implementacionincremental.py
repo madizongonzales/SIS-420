@@ -57,7 +57,9 @@ def run(episodes, is_training=True, render=False, epsilon=0.1):
                 visit_count[state, action] += 1  # Incrementar el contador de visitas
                 alpha = 1 / visit_count[state, action]  # Cálculo de la Tasa de aprendizaje incremental
 
-                # Actualización de Q usando
+                # Actualización de Q
+                #Alpha una constante entre 1-0
+                #el valor de q se va actualizando en cada paso, más óptimo
                 q[state, action] += alpha * (
                     reward + discount_factor_g * np.max(q[new_state, :]) - q[state, action]
                 )

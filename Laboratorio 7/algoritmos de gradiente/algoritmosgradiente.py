@@ -13,6 +13,10 @@ def softmax(H):
 # Esta función actualiza las preferencias H basadas en la acción tomada, la recompensa obtenida, la recompensa promedio, las probabilidades y la tasa de aprendizaje.
 def update_preferences(H, action, reward, average_reward, probabilities, learning_rate):
     # Actualiza la preferencia del acción tomada con la fórmula específica.
+    #si se toma una  y se ha obtenido una recompensa mejor a la estimada, la preferencia sube y para el resto de acciones bajará
+    #Preferencia subirá, las recomenpensas son más pequeñas a la que hemos obtenido, la preferencia baja y para el resto de acciones subirá
+    #Acción buena, la explotaremos más, el resto las exploraremos menos
+    #Acción mala, la explotaremos menos, y el resto la exprolaremos más
     H[action] += learning_rate * (reward - average_reward) * (1 - probabilities[action])
     for a in range(len(H)):
         if a != action:

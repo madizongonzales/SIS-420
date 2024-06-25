@@ -49,7 +49,8 @@ def run(episodes, is_training=True, render=False, epsilon=0.1, ucb_coefficient=2
                 # Selección de acción con UCB
                 
                  #favorece el hecho de escoger aquellas acciones que se hayan provado menos, se aumenta el vaor de q para farecer
-                 # (visit_count[state, :] + 1e-6) cuantos más turnos pasen aquellas acciones menos probadas, aumentara q para favorecer que sean escogidas
+                 # (visit_count[state, :] + 1e-6) cuantos más turnos pasen aquellas acciones menos probadas
+                 # #aumentara q para favorecer que sean escogidas
                 action = np.argmax(q[state, :] + ucb_coefficient * np.sqrt(np.log(i+1) / (visit_count[state, :] + 1e-6)))
 
             new_state, reward, terminated, truncated, _ = env.step(action)

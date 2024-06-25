@@ -47,14 +47,17 @@ def run(episodes, is_training=True, render=False, epsilon=0.1):
 
         while not terminated and not truncated:
             if is_training and rng.random() < epsilon:
-                action = env.action_space.sample()
+                action = env.action_space.sample() #Exploración, selecciona una acción aleatoria
             else:
-                action = np.argmax(q[state, :])
+                action = np.argmax(q[state, :]) #Ecplotación, selecciona la mejor acción
 
             new_state, reward, terminated, truncated, _ = env.step(action)
             rewards += reward
 
             if is_training:
+                #Descubrir qué acción tiene el mejor valor
+                #Estamos explotando cuando solo toma acciones toman el mayor valor de la q conocidas
+                #Estamos explorando cuando no sabemos su valor q, o tal vez lo conocemos pero es muy bajo
                 #valor de una acción
                 q[state, action] += learning_rate_a * (
                     reward + discount_factor_g * np.max(q[new_state, :]) - q[state, action]
@@ -66,7 +69,7 @@ def run(episodes, is_training=True, render=False, epsilon=0.1):
                 #q[new_state, new_action] para el nuevo estado y nueva acción de q
                 
             state = new_state
-
+        #Epsilon mas baja que favorece la explotación, con la esperanza que ya se hayan probado muchas acciónes
         epsilon = max(epsilon - epsilon_decay_rate, 0)
         rewards_per_episode[i] = rewards
 

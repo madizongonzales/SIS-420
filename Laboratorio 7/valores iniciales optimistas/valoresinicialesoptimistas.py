@@ -18,8 +18,8 @@ def save_rewards(rewards, filename):
     with open(filename, 'w') as f:
         for episode, reward in enumerate(rewards):
             f.write(f"Episode {episode}: {reward}\n")
-
-def run(episodes, is_training=True, render=False, epsilon=0.0, optimistic_value=10.0):
+        
+def run(episodes, is_training=True, render=False, epsilon=0.1, optimistic_value=10.0):
     env = gym.make('Taxi-v3', render_mode='human' if render else None)
 
     if is_training:
